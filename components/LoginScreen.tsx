@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+import axios from 'axios';
 
 type RootStackParamList = {
   Login: undefined;
   Porto: undefined;
+  Register: undefined;
 };
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
@@ -17,17 +19,50 @@ type Props = {
 };
 
 const LoginScreen: React.FC<Props> = ({ navigation }) => {
+  const [fullName, setFullName] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = () => {
+    axios.get('https://my-json-server.typicode.com/offmonte/LoginFakeAPI/Usuarios')
+      .then((response: any) => {
+        const users = response.data;
+        const user = users.find((u: any) => u.fullName === fullName && u.password === password);
+        if (user) {
+          navigation.navigate('Porto');
+        } else {
+          alert('Nome de usuário ou senha incorretos');
+        }
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.logo}>Blue Horizon</Text>
       <Text style={styles.label}>Login</Text>
-      <TextInput style={styles.input} placeholder="Usuário" />
-      <TextInput style={styles.input} placeholder="Senha" secureTextEntry={true} />
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Porto')}>
+      <TextInput
+        style={styles.input}
+        placeholder="Usuário"
+        value={fullName}
+        onChangeText={setFullName}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Senha"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
         <Text style={styles.forgotPassword}>Esqueci minha senha</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.createAccountButton} onPress={() => navigation.navigate('Register')}>
+        <Text style={styles.createAccountText}>Criar Conta</Text>
       </TouchableOpacity>
     </View>
   );
@@ -75,6 +110,19 @@ const styles = StyleSheet.create({
   forgotPassword: {
     color: '#fff',
     fontSize: 14,
+  },
+  createAccountButton: {
+    width: '100%',
+    backgroundColor: '#004d99',
+    borderRadius: 5,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  createAccountText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
 

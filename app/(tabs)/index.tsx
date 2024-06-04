@@ -1,23 +1,24 @@
 import React from 'react';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import PortoScreen from '../../components/PortoScreen';
+import { StyleSheet, View } from 'react-native';
+import PortoScreen from '../../components/PortoScreen'; // Caminho ajustado para PortoScreen
 
-type RootStackParamList = {
-  Login: undefined;
-  Porto: undefined;
+type IndexScreenProps = {
+  navigation: any;
+  route: any;
 };
 
-type IndexScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Porto'>;
-type IndexScreenRouteProp = RouteProp<RootStackParamList, 'Porto'>;
-
-type Props = {
-  navigation: IndexScreenNavigationProp;
-  route: IndexScreenRouteProp;
+const IndexScreen: React.FC<IndexScreenProps> = ({ navigation, route }) => {
+  return (
+    <View style={styles.container}>
+      <PortoScreen navigation={navigation} route={route} />
+    </View>
+  );
 };
 
-const IndexScreen: React.FC<Props> = ({ navigation, route }) => {
-  return <PortoScreen navigation={navigation} route={route} />;
-};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default IndexScreen;

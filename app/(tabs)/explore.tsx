@@ -1,23 +1,22 @@
 import React from 'react';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import LoginScreen from '../../components/LoginScreen';
+import { createStackNavigator } from '@react-navigation/stack';
+import LoginScreen from '../components/LoginScreen';
+import RegisterScreen from '../components/RegisterScreen';
 
 type RootStackParamList = {
   Login: undefined;
-  Porto: undefined;
+  Register: undefined;
 };
 
-type ExploreScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
-type ExploreScreenRouteProp = RouteProp<RootStackParamList, 'Login'>;
+const Stack = createStackNavigator<RootStackParamList>();
 
-type Props = {
-  navigation: ExploreScreenNavigationProp;
-  route: ExploreScreenRouteProp;
-};
-
-const ExploreScreen: React.FC<Props> = ({ navigation, route }) => {
-  return <LoginScreen navigation={navigation} route={route} />;
+const ExploreScreen: React.FC = () => {
+  return (
+    <Stack.Navigator initialRouteName="Login">
+      <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
+    </Stack.Navigator>
+  );
 };
 
 export default ExploreScreen;

@@ -7,6 +7,9 @@ import IndexScreen from './index';
 
 const Tab = createBottomTabNavigator();
 
+const ExploreScreenContainer = (props: any) => <ExploreScreen {...props} />;
+const IndexScreenContainer = (props: any) => <IndexScreen {...props} />;
+
 export default function TabNavigator() {
   return (
     <NavigationContainer independent={true}>
@@ -28,11 +31,11 @@ export default function TabNavigator() {
       >
         <Tab.Screen 
           name="Explore" 
-          component={ExploreScreen} 
+          component={ExploreScreenContainer} 
         />
         <Tab.Screen 
           name="Index" 
-          component={IndexScreen} 
+          component={IndexScreenContainer} 
         />
       </Tab.Navigator>
     </NavigationContainer>
