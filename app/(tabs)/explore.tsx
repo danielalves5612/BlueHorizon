@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from '../components/LoginScreen';
-import RegisterScreen from '../components/RegisterScreen';
+import LoginScreen from '../../components/LoginScreen';
+import RegisterScreen from '../../components/RegisterScreen';
 
 type RootStackParamList = {
   Login: undefined;

@@ -1,16 +1,11 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import PortoScreen from '../../components/PortoScreen'; // Caminho ajustado para PortoScreen
+import { View, Text, StyleSheet } from 'react-native';
+import PortoScreen from '../../components/PortoScreen';
 
-type IndexScreenProps = {
-  navigation: any;
-  route: any;
-};
-
-const IndexScreen: React.FC<IndexScreenProps> = ({ navigation, route }) => {
+const IndexScreen = () => {
   return (
     <View style={styles.container}>
-      <PortoScreen navigation={navigation} route={route} />
+      <PortoScreen />
     </View>
   );
 };
@@ -18,6 +13,9 @@ const IndexScreen: React.FC<IndexScreenProps> = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#007BFF',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

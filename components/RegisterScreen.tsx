@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import axios from 'axios';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+import axios from 'axios';
+import { LinearGradient } from 'expo-linear-gradient';
 
 type RootStackParamList = {
   Login: undefined;
+  Porto: undefined;
   Register: undefined;
 };
 
@@ -23,25 +25,18 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const handleRegister = () => {
-    const userData = {
-      fullName,
-      email,
-      password,
-    };
-
-    axios.post('https://my-json-server.typicode.com/offmonte/LoginFakeAPI/Usuarios', userData)
-      .then((response: any) => {
-        console.log(response.data);
-        navigation.navigate('Login');
-      })
-      .catch((error: any) => {
-        console.error(error);
-      });
+    // Simulando um registro bem-sucedido
+    Alert.alert('Usuário Cadastrado com Sucesso');
+    navigation.navigate('Login');
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Criar Conta</Text>
+    <LinearGradient
+      colors={['#4c669f', '#3b5998', '#192f6a']}
+      style={styles.container}
+    >
+      <Text style={styles.logo}>Blue Horizon</Text>
+      <Text style={styles.label}>Crie sua conta</Text>
       <TextInput
         style={styles.input}
         placeholder="Nome Completo"
@@ -63,22 +58,29 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
         secureTextEntry
       />
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Registrar</Text>
+        <Text style={styles.buttonText}>Cadastrar</Text>
       </TouchableOpacity>
-    </View>
+      <TouchableOpacity style={styles.createAccountButton} onPress={() => navigation.navigate('Login')}>
+        <Text style={styles.createAccountText}>Já tem uma conta? Login</Text>
+      </TouchableOpacity>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0066CC',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
   },
-  title: {
+  logo: {
     fontSize: 32,
+    color: '#fff',
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 24,
     color: '#fff',
     marginBottom: 20,
   },
@@ -100,6 +102,19 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   buttonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  createAccountButton: {
+    width: '50%',
+    backgroundColor: '#004d99',
+    borderRadius: 5,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  createAccountText: {
     color: '#fff',
     fontSize: 16,
   },

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import axios from 'axios';
+import { LinearGradient } from 'expo-linear-gradient';
 
 type RootStackParamList = {
   Login: undefined;
@@ -26,21 +27,31 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
     axios.get('https://my-json-server.typicode.com/offmonte/LoginFakeAPI/Usuarios')
       .then((response: any) => {
         const users = response.data;
-        const user = users.find((u: any) => u.fullName === fullName && u.password === password);
+        const user = users.find((u: any) => u.NomeCompleto === fullName && u.senha === password);
         if (user) {
+          Alert.alert('Você está logado');
+          setFullName('');
+          setPassword('');
           navigation.navigate('Porto');
         } else {
-          alert('Nome de usuário ou senha incorretos');
+          Alert.alert('Nome de usuário ou senha incorretos');
         }
       })
       .catch((error: any) => {
         console.error(error);
+        Alert.alert('Erro ao tentar fazer login');
       });
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.logo}>Blue Horizon</Text>
+    <LinearGradient
+      colors={['#4c669f', '#3b5998', '#192f6a']}
+      style={styles.container}
+    >
+      <Image
+        source={require('../assets/images/Foto BlueHorizon.jpg')}
+        style={styles.logo}
+      />
       <Text style={styles.label}>Login</Text>
       <TextInput
         style={styles.input}
@@ -64,21 +75,20 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
       <TouchableOpacity style={styles.createAccountButton} onPress={() => navigation.navigate('Register')}>
         <Text style={styles.createAccountText}>Criar Conta</Text>
       </TouchableOpacity>
-    </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0066CC',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
   },
   logo: {
-    fontSize: 32,
-    color: '#fff',
+    width: 200,
+    height: 200,
     marginBottom: 20,
   },
   label: {
@@ -112,7 +122,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   createAccountButton: {
-    width: '100%',
+    width: '30%',
     backgroundColor: '#004d99',
     borderRadius: 5,
     height: 40,
